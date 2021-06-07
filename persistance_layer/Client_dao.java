@@ -1,5 +1,10 @@
 package persistance_layer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import entities.Client;
+
 public class Client_dao extends Objects{
     private EntityManager entityManager;
 
@@ -21,7 +26,15 @@ public class Client_dao extends Objects{
         entityManager.remove(entity);
     }
 
-    public List<Client> getAll() {
-        return entityManager.createQuery("from Client").getResultList();
+    public HashMap<String,Client> getAll() {
+
+        Map<String,Client> result=new HashMap<String,Client>();
+        List res=new ArrayList<Client>();
+        res=entityManager.createQuery("from Client").getResultList();
+        Iterator<Client> it=res.iterator();
+        while (it.hasNext()){
+            Client item=it.next();
+            result.put(item.getName(),item);
+        }
     }
 }
